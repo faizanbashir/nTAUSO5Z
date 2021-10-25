@@ -52,13 +52,13 @@ The deployment is running `3` replicas of the same pod for high availability and
 We can connect to the application using `curl`, as shown previously:
 
 ```shell
-$ curl $(minikube service server --url=true)
+curl $(minikube service server --url=true)
 ```
 
 We can also connect to it using `telnet`:
 
 ```shell
-$ telnet <ip-address> <port>
+telnet <ip-address> <port>
 ```
 
 Since this is a non standard webserver and does not output any status codes we wont be able to connect it using the browser or any other mechanism which checks for a status code.
