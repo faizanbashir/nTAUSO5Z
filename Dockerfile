@@ -6,7 +6,7 @@ RUN adduser --no-create-home www
 
 USER www
 
-ADD server /usr/src/app/
+ADD app /usr/src/app/
 
 WORKDIR /usr/src/app/
 
