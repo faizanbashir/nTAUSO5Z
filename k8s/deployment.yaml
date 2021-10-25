@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: server
+  labels:
+    app: server
+spec:
+  replicas: 3
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+  selector:
+    matchLabels:
+      app: server
+  template:
+    metadata:
+      labels:
+        app: server
+    spec:
+      containers:
+      - name: server
+        image: faizanbashir/ruby:3.0.2
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 80
+        readinessProbe:
+          exec:
+            command:
+            - sh
+            - -c
+            - curl localhost/healthcheck | grep 'OK' | wc -l
+          failureThreshold: 3
+          initialDelaySeconds: 10
+          periodSeconds: 3
+        livenessProbe:
+          exec:
+            command:
+            - sh
+            - -c
+            - curl localhost/healthcheck | grep 'OK' | wc -l
+          failureThreshold: 3
+          initialDelaySeconds: 10
+          periodSeconds: 3
+          terminationGracePeriodSeconds: 60
